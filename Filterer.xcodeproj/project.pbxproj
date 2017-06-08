@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B56190CF1ED42F8300FFCB96 /* FiltersData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56190CE1ED42F8300FFCB96 /* FiltersData.swift */; };
+		B565CC761EE6E48D00A0E8D3 /* ZoomingAndScrolling.swift in Sources */ = {isa = PBXBuildFile; fileRef = B565CC751EE6E48D00A0E8D3 /* ZoomingAndScrolling.swift */; };
 		B56DF25D1EC33BDD00BBAFEA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DF25C1EC33BDD00BBAFEA /* AppDelegate.swift */; };
 		B56DF25F1EC33BDD00BBAFEA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B56DF25E1EC33BDD00BBAFEA /* ViewController.swift */; };
 		B56DF2621EC33BDD00BBAFEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B56DF2601EC33BDD00BBAFEA /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		B56190CE1ED42F8300FFCB96 /* FiltersData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersData.swift; sourceTree = "<group>"; };
+		B565CC751EE6E48D00A0E8D3 /* ZoomingAndScrolling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomingAndScrolling.swift; sourceTree = "<group>"; };
 		B56DF2591EC33BDD00BBAFEA /* Filterer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Filterer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B56DF25C1EC33BDD00BBAFEA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B56DF25E1EC33BDD00BBAFEA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 				B56DF25E1EC33BDD00BBAFEA /* ViewController.swift */,
 				B5AB4A4F1EE18E58003443C2 /* States.swift */,
 				B5AB4A471EDD9331003443C2 /* FiltersMenu.swift */,
+				B565CC751EE6E48D00A0E8D3 /* ZoomingAndScrolling.swift */,
 				B5AB4A4B1EE15F06003443C2 /* NewImageSelection.swift */,
 				B5AB4A4D1EE18CA3003443C2 /* BottomMenu.swift */,
 				B56190CE1ED42F8300FFCB96 /* FiltersData.swift */,
@@ -283,6 +286,7 @@
 				B5AB4A4A1EDE9B25003443C2 /* FilterCell.swift in Sources */,
 				B56DF25F1EC33BDD00BBAFEA /* ViewController.swift in Sources */,
 				B56190CF1ED42F8300FFCB96 /* FiltersData.swift in Sources */,
+				B565CC761EE6E48D00A0E8D3 /* ZoomingAndScrolling.swift in Sources */,
 				B56DF28B1EC342E700BBAFEA /* RGBAImage.swift in Sources */,
 				B56DF28D1EC3434100BBAFEA /* ImageProcessor.swift in Sources */,
 				B5AB4A501EE18E58003443C2 /* States.swift in Sources */,

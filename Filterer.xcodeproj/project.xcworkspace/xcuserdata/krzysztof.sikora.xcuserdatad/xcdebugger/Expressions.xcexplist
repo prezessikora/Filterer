@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ViewController.collectionView(UICollectionView, didSelectItemAtIndexPath : NSIndexPath) -&gt; ():CollectionExtension.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "collectionView.contentSize">
+            </PersistentString>
+            <PersistentString
+               value = "collectionView.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.onFilter(FilterColor) -&gt; ():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "compareButton.enabled">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.collectionView(UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath : NSIndexPath) -&gt; CGSize:CollectionExtension.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sectionInsets.left">
+            </PersistentString>
+            <PersistentString
+               value = "itemsPerRow">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

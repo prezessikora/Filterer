@@ -49,9 +49,29 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var filtersCollection: UICollectionView!
         
+    // scrolling zooming
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var scrollViewFiltered: UIScrollView!
+    
+    @IBOutlet weak var scrollViewFiltered2: UIScrollView!
+    
+    
+    
+    @IBOutlet var zoomTapGestureRecognizer: UITapGestureRecognizer!
+    
+    @IBOutlet var zoomTapGestureRecognizer2: UITapGestureRecognizer!
+    
+    @IBOutlet var zoomTapGestureRecognizer3: UITapGestureRecognizer!
+    
+    //
+    
     var ip = ImageProcessing()
     
     @IBOutlet weak var intensitySlider: UISlider!
+    
+    
 
     var filteredImageActive : FilteredImage = .NoImage
     
@@ -86,8 +106,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func showOriginalImage() {
-        filteredImageView.alpha = 0
-        filteredImageView2.alpha = 0
+        scrollViewFiltered.alpha = 0
+        scrollViewFiltered2.alpha = 0
         setView(to: .Original)
     }
     
@@ -96,12 +116,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         switch filteredImageActive {
             
         case .First:
-            filteredImageView.alpha = 1
-            filteredImageView2.alpha = 0
+            scrollViewFiltered.alpha = 1
+            scrollViewFiltered2.alpha = 0
 
         case .Second:
-            filteredImageView.alpha = 0
-            filteredImageView2.alpha = 1
+            scrollViewFiltered.alpha = 0
+            scrollViewFiltered2.alpha = 1
         
         case .NoImage:
             return
@@ -143,6 +163,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             self.fd.initializeThumbnails()
         })
         
+        zoomTapGestureRecognizer.numberOfTapsRequired = 2
+        zoomTapGestureRecognizer2.numberOfTapsRequired = 2
+        zoomTapGestureRecognizer3.numberOfTapsRequired = 2
+
         
         
         originalLabel.alpha = 0.5
@@ -155,7 +179,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 currentImage!.switchImage()
             }
         }
-    } 
+    }
     
     func showMenu(menu: UIView, height: CGFloat) {
         view.addSubview(menu)
@@ -201,20 +225,18 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         switch filteredImageActive {
         case .First:
             UIView.animateWithDuration(1, animations: {
-                self.filteredImageView.alpha = 1.0
+                self.scrollViewFiltered.alpha = 1.0
             })
         case .Second:
             UIView.animateWithDuration(1, animations: {
-                self.filteredImageView2.alpha = 1.0
+                self.scrollViewFiltered2.alpha = 1.0
             })
         case .NoImage:
             return
         }
 
     }
-    
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        return imageView
-    }
+
+
 }
 

@@ -24,9 +24,19 @@ class NoImage {
     
     func switchImage() {}
     
+    func onTap() {}
+    
 }
 
 class Original: NoImage {
+    
+    override func onTap() {
+        
+        UIView.animateWithDuration(0.4, animations: {
+            self.controller.scrollView.zoomScale = 1.5 * self.controller.scrollView.zoomScale
+        })
+
+    }
     
     override func switchImage() {
        controller.showfilteredImage()
@@ -52,7 +62,7 @@ class Original: NoImage {
         controller.filteredImageView.image = resultImage
         
         UIView.animateWithDuration(1, animations: {
-            self.controller.filteredImageView.alpha = 1.0
+            self.controller.scrollViewFiltered.alpha = 1.0
         })
         
         
@@ -66,6 +76,22 @@ class Original: NoImage {
 }
 
 class Filtered: NoImage {
+    
+    override func onTap() {
+        UIView.animateWithDuration(0.4, animations: {
+          switch self.controller.filteredImageActive {
+                
+            case .First:
+                self.controller.scrollViewFiltered.zoomScale = 1.5 * self.controller.scrollViewFiltered.zoomScale
+            case .Second:
+                self.controller.scrollViewFiltered2.zoomScale = 1.5 * self.controller.scrollViewFiltered2.zoomScale
+            case .NoImage:
+                return
+            }
+
+            
+        })
+    }
     
     override func switchImage() {
         controller.showOriginalImage()
@@ -104,16 +130,16 @@ class Filtered: NoImage {
             
             controller.filteredImageView2.image = resultImage
             UIView.animateWithDuration(1, animations: {
-                self.controller.filteredImageView2.alpha = 1.0
+                self.controller.scrollViewFiltered2.alpha = 1.0
             })
             controller.filteredImageActive = .Second
             
             
         } else {
-            controller.filteredImageView.alpha = 1
+            controller.scrollViewFiltered.alpha = 1
             controller.filteredImageView.image = resultImage
             UIView.animateWithDuration(1, animations: {
-                self.controller.filteredImageView2.alpha = 0.0
+                self.controller.scrollViewFiltered2.alpha = 0.0
             })
             controller.filteredImageActive = .First
             
