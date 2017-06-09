@@ -36,16 +36,13 @@ extension ViewController {
         if (filterEditMenu.alpha > 0) {
             hideMenu(filterEditMenu)
             editButton.selected = false
-        }
-        filteredImageActive = .NoImage
-        
+        }        
     }
 
 
     func newImageSelected(image: UIImage) {
         imageView.image = image
-        
-        showOriginalImage()
+        originalImage = image
         
         filterButton.enabled = true
         shareButton.enabled = true

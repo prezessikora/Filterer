@@ -10,11 +10,32 @@ import UIKit
 
 extension ViewController {
     @IBAction func onShare(sender: AnyObject) {
-        currentImage!.onShare(sender)
+        
+        let imageToShare = imageView.image
+        
+        let activityController = UIActivityViewController(activityItems: ["Check our or new cool app!",imageToShare!], applicationActivities: nil)
+        
+        presentViewController(activityController, animated: true, completion: nil)
     }
     
     @IBAction func onCompareButton(sender: AnyObject) {
-        currentImage!.onCompare()
+        //currentImage!.onCompare()
+        if imageView.image == originalImage {
+            
+            UIView.transitionWithView(imageView,duration: 0.4,options: UIViewAnimationOptions.TransitionCrossDissolve,animations: {
+                self.imageView.image = self.filteredImage
+                },completion: nil)
+
+            originalLabel.hidden = true
+
+
+        } else {
+            UIView.transitionWithView(imageView,duration: 0.4,options: UIViewAnimationOptions.TransitionCrossDissolve,animations: {
+                self.imageView.image = self.originalImage
+                },completion: nil)
+            originalLabel.hidden = false
+            
+        }
     }
 
     

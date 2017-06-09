@@ -24,15 +24,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBOutlet weak var compareButton: UIButton!
     
-    // image views
+    // images
     
+    var originalImage: UIImage?
+    
+    var filteredImage: UIImage?
+
+
     @IBOutlet weak var imageView: UIImageView!
    
-    @IBOutlet weak var filteredImageView: UIImageView!
-    
-    @IBOutlet weak var filteredImageView2: UIImageView!
-    
-    
     @IBOutlet weak var originalLabel: UILabel!
     
     // additional menus
@@ -52,102 +52,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     // scrolling zooming
     
     @IBOutlet weak var scrollView: UIScrollView!
-    
-    @IBOutlet weak var scrollViewFiltered: UIScrollView!
-    
-    @IBOutlet weak var scrollViewFiltered2: UIScrollView!
-    
-    
-    
-    @IBOutlet var zoomTapGestureRecognizer: UITapGestureRecognizer!
-    
-    @IBOutlet var zoomTapGestureRecognizer2: UITapGestureRecognizer!
-    
-    @IBOutlet var zoomTapGestureRecognizer3: UITapGestureRecognizer!
-    
-    //
+
     
     var ip = ImageProcessing()
     
     @IBOutlet weak var intensitySlider: UISlider!
-    
-    
-
-    var filteredImageActive : FilteredImage = .NoImage
-    
-    enum FilteredImage {
-        case NoImage
-        case First
-        case Second
-    }
-    
-    var currentImage: NoImage?
-    
-    enum CurrentImage {
-        case Original
-        case Filtered
-    }
-    
-    func setView(to image:CurrentImage) {
-        switch image {
-        case .Original:
-            currentImage = Original(controller: self)
-            originalLabel.hidden = false
-        case .Filtered:
-            currentImage = Filtered(controller: self)
-            originalLabel.hidden = true
-        }
-    }
     
     @IBAction func onSlider(sender: AnyObject) {
         let slider = sender as! UISlider as UISlider
         ip.updateIntensity((slider.value))
         applyFilter()
     }
-    
-    func showOriginalImage() {
-        scrollViewFiltered.alpha = 0
-        scrollViewFiltered2.alpha = 0
-        setView(to: .Original)
-    }
-    
-    func showfilteredImage() {
-        
-        switch filteredImageActive {
-            
-        case .First:
-            scrollViewFiltered.alpha = 1
-            scrollViewFiltered2.alpha = 0
-
-        case .Second:
-            scrollViewFiltered.alpha = 0
-            scrollViewFiltered2.alpha = 1
-        
-        case .NoImage:
-            return
-        }
-        
-        setView(to: .Filtered)
-    }
-    
-    func addTapRecognizer(forImage iView: UIImageView) {
-        let tapRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handlePress(_:)))
-        
-        imageView.userInteractionEnabled = true
-        imageView.addGestureRecognizer(tapRecognizer)
-        
-        tapRecognizer.minimumPressDuration = 0
-    }
+  
     
     func setUpTapRecognizers() {
-        addTapRecognizer(forImage: imageView)
-        addTapRecognizer(forImage: filteredImageView)
-        addTapRecognizer(forImage: filteredImageView2)
-    }        
+  
+        let tapRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(ViewController.handlePress(_:)))
+        tapRecognizer.minimumPressDuration = 0.5
+        
+        scrollView.addGestureRecognizer(tapRecognizer)
+        
+
+        let tapRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(ViewController.onDoubleTap(_:)))
+        tapRecognizer2.numberOfTapsRequired = 2
+        
+        scrollView.addGestureRecognizer(tapRecognizer2)
+    }
     
     override func viewDidLoad() {
-        
-        currentImage = Original(controller: self)
         
         super.viewDidLoad()
         
@@ -157,26 +89,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         filtersList.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         filterEditMenu.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
         
-        //setUpTapRecognizers()
+        setUpTapRecognizers()
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
             self.fd.initializeThumbnails()
         })
         
-        zoomTapGestureRecognizer.numberOfTapsRequired = 2
-        zoomTapGestureRecognizer2.numberOfTapsRequired = 2
-        zoomTapGestureRecognizer3.numberOfTapsRequired = 2
-
-        
-        
+      
         originalLabel.alpha = 0.5
+    }
+    
+    func onDoubleTap(sender: UITapGestureRecognizer) {
+
+        UIView.animateWithDuration(0.4, animations: {
+            self.scrollView.zoomScale = 1.5 * self.scrollView.zoomScale
+        })
+
     }
     
     func handlePress(sender: UITapGestureRecognizer) {
         
-        if filteredImageActive != .NoImage {
+        if filteredImage != nil {
             if (sender.state == .Began) || (sender.state == .Ended) {
-                currentImage!.switchImage()
+                if imageView.image == originalImage {
+                    imageView.image = filteredImage
+                    originalLabel.hidden = true
+                } else {
+                    imageView.image = originalImage
+                    originalLabel.hidden = false
+                }
             }
         }
     }
@@ -217,26 +158,24 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func applyFilter() {
-
-        currentImage!.applyFilter()
+        
+        let resultImage = ip.applyFilters()
+        
+        filteredImage = resultImage
+        
+        UIView.transitionWithView(imageView,duration: 0.4,options: UIViewAnimationOptions.TransitionCrossDissolve,animations: {
+            self.imageView.image = resultImage
+            },completion: nil)
+        
+        originalLabel.hidden = true
+        compareButton.enabled = true
+        editButton.enabled = true
+        
     }
-            
-    func showActiveFilteredImage() {
-        switch filteredImageActive {
-        case .First:
-            UIView.animateWithDuration(1, animations: {
-                self.scrollViewFiltered.alpha = 1.0
-            })
-        case .Second:
-            UIView.animateWithDuration(1, animations: {
-                self.scrollViewFiltered2.alpha = 1.0
-            })
-        case .NoImage:
-            return
-        }
-
+    
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return imageView
     }
-
-
+    
 }
 
